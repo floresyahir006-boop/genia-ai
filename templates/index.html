@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genia AI - Panel de Control</title>
+    <style>
+        body { background-color: #0f172a; color: #f8fafc; font-family: sans-serif; display: flex; justify-content: center; padding: 20px; }
+        .card { background-color: #1e293b; border: 1px solid #334155; padding: 25px; border-radius: 15px; max-w: 600px; w: 100%; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        h1 { color: #22d3ee; margin-top: 0; font-size: 28px; margin-bottom: 2px; }
+        .userid { color: #94a3b8; font-size: 14px; margin-bottom: 20px; }
+        .userid span { color: #22d3ee; font-family: monospace; font-weight: bold; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .subcard { background: #0f172a; padding: 15px; border-radius: 10px; border: 1px solid #334155; text-align: center; }
+        .subcard p { margin: 0; font-size: 12px; color: #94a3b8; text-transform: uppercase; }
+        .subcard h3 { margin: 5px 0; font-size: 32px; color: white; }
+        button { background: linear-gradient(to right, #10b981, #059669); color: white; border: none; padding: 10px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; width: 100%; font-size: 14px; }
+        button:hover { opacity: 0.9; }
+        .section-title { font-size: 18px; margin-top: 25px; margin-bottom: 10px; color: white; }
+        textarea, input { width: 95%; background: #0f172a; border: 1px solid #334155; color: white; padding: 10px; border-radius: 6px; margin-top: 5px; margin-bottom: 10px; font-size: 14px; }
+        button.btn-proc { background: #06b6d4; color: #0f172a; font-size: 16px; margin-top: 5px; }
+        .console { background: black; color: #34d399; font-family: monospace; padding: 12px; border-radius: 8px; margin-top: 20px; font-size: 13px; min-height: 40px; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>Genia AI Panel</h1>
+        <div class="userid">ID de Usuario: <span>usuario_prueba</span> | Plan Gratuito</div>
+
+        <div class="grid">
+            <div class="subcard">
+                <p>Créditos de Imagen</p>
+                <h3 id="txtCreditosImagen">20</h3>
+                <button onclick="verAnuncio('imagen')">📺 Ver Anuncio (+20)</button>
+            </div>
+
+            <div class="subcard">
+                <p>Créditos de Audio</p>
+                <h3 id="txtCreditosAudio">5</h3>
+                <button onclick="verAnuncio('audio')">📺 Ver Anuncio (+1)</button>
+            </div>
+        </div>
+
+        <div class="section-title">🎬 Validador de Shorts</div>
+        <label style="font-size: 12px; color: #94a3b8;">Guión del Video</label>
+        <textarea id="inputGuion" rows="2" placeholder="Escribe la idea de tu short..."></textarea>
+        
+        <label style="font-size: 12px; color: #94a3b8;">Imágenes Necesarias</label>
+        <input id="inputImagenes" type="number" value="5">
+        
+        <button class="btn-proc" onclick="procesarShort()">Procesar Short con Créditos</button>
+
+        <div class="console">
+            <div id="logConsola">// Estado del Servidor: Panel cargado correctamente.</div>
+        </div>
+    </div>
+
+    <script>
+        const userId = "usuario_prueba";
+
+        function imprimirLog(msg, error) {
+            const log = document.getElementById("logConsola");
+            log.innerText = "> " + msg;
+            if (error) {
+                log.style.color = "#f87171";
+            } else {
+                log.style.color = "#34d399";
+            }
+        }
+
+        async function verAnuncio(tipo) {
+            imprimirLog("Sincronizando anuncio de " + tipo + "...", false);
+            try {
+                const res = await fetch("/recompensa_anuncio?user_id=" + userId + "&tipo_anuncio=" + tipo, { method: 'POST' });
+                const data = await res.json();
+                if (data.status === "success") {
+                    document.getElementById("txtCreditosImagen").innerText = data.saldo_actual.creditos_imagen;
+                    document.getElementById("txtCreditosAudio").innerText = data.saldo_actual.creditos_audio;
+                    imprimirLog(data.message, false);
+                } else {
+                    imprimirLog(data.message, true);
+                }
+            } catch (e) {
+                imprimirLog("Error de conexión al servidor", true);
+            }
+        }
+
+        async function procesarShort() {
+            const guion = document.getElementById("inputGuion").value;
+            const imgs = document.getElementById("inputImagenes").value;
+            if (!guion) {
+                return imprimirLog("Escribe un guión antes de procesar", true);
+            }
+
+            imprimirLog("Validando créditos del Short...", false);
+            try {
+                const res = await fetch("/procesar-con-creditos?user_id=" + userId + "&texto_guion=" + encodeURIComponent(guion) + "&imagenes_requeridas=" + imgs, { method: 'POST' });
+                const data = await res.json();
+                if (data.status === "success") {
+                    if (data.saldo_restante) {
+                        document.getElementById("txtCreditosImagen").innerText = data.saldo_restante.creditos_imagen;
+                    }
+                    imprimirLog("Short procesado correctamente con créditos.", false);
+                } else {
+                    imprimirLog(data.message, true);
+                }
+            } catch (e) {
+                imprimirLog("Error de conexión", true);
+            }
+        }
+    </script>
+</body>
+</html>
