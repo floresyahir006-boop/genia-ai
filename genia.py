@@ -61,3 +61,18 @@ async def generar_audio_ia(usar_clon: bool = True, prompt: str = "Hola"):
 async def exportar_video_largo(formato: str = "916"):
     print(f"🚀 Procesando Estudio TikTok Vertical ({formato}) en segundo plano...")
     return {"status": "success", "message": "Video exportado con éxito"}
+
+# 🏠 PANTALLA PRINCIPAL DE LA SUITE G777
+templates = Jinja2Templates(directory="templates")
+
+@app.get("/")
+async def leer_raiz(request: Request = None):
+    from fastapi import Request
+    # Si da error por el parámetro request, lo manejamos limpio
+    try:
+        return templates.TemplateResponse("index.html", {"request": request})
+    except:
+        with open("templates/index.html", "r") as f:
+            html_content = f.read()
+        from fastapi.responses import HTMLResponse
+        return HTMLResponse(content=html_content, status_code=200)
