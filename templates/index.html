@@ -3,284 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Genia AI — Generador de imágenes</title>
+    <title>GENIA AI - Estudio Multimedia Pro</title>
+    <link rel="stylesheet" href="/static/style.css" id="theme-stylesheet">
     <style>
-        :root {
-            --bg-primary: #0b132b;
-            --bg-secondary: #1c2541;
-            --accent-aqua: #00f2fe;
-            --accent-blue: #4facfe;
-            --text-main: #ffffff;
-            --text-muted: #8d99ae;
-        }
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-main);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            background-image: radial-gradient(circle at 20% 30%, var(--bg-secondary) 0%, var(--bg-primary) 70%);
-        }
-        /* Barra Superior */
-        .navbar {
-            background: rgba(11, 19, 43, 0.9);
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(0, 242, 254, 0.15);
-            backdrop-filter: blur(10px);
-        }
-        .nav-logo {
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--accent-aqua);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .nav-links {
-            display: flex;
-            gap: 20px;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-        .nav-links li {
-            color: var(--text-muted);
-            cursor: pointer;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        .nav-links li:hover, .nav-links li.active {
-            color: var(--accent-aqua);
-        }
-        /* Contenedor de la App */
-        .app-container {
-            display: flex;
-            flex: 1;
-        }
-        /* Menú Lateral */
-        .sidebar {
-            width: 240px;
-            background: rgba(28, 37, 65, 0.4);
-            border-right: 1px solid rgba(0, 242, 254, 0.1);
-            padding: 25px 15px;
-            backdrop-filter: blur(5px);
-        }
-        .sidebar-menu {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .sidebar-menu li {
-            padding: 12px 15px;
-            border-radius: 8px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            color: var(--text-muted);
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-        .sidebar-menu li:hover, .sidebar-menu li.active {
-            background: rgba(0, 242, 254, 0.1);
-            color: var(--accent-aqua);
-            padding-left: 20px;
-        }
-        /* Área de Contenido Principal */
-        .main-content {
-            flex: 1;
-            padding: 40px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-        }
-        .section-card {
-            background: rgba(28, 37, 65, 0.3);
-            border-radius: 16px;
-            padding: 30px;
-            border: 1px solid rgba(0, 242, 254, 0.1);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-        }
-        h1, h2, h3 {
-            color: var(--accent-aqua);
-            margin-top: 0;
-        }
-        textarea {
-            width: 100%;
-            height: 100px;
-            background: #1c2541;
-            border: 1px solid rgba(58, 80, 107, 0.7);
-            border-radius: 10px;
-            color: #fff;
-            padding: 12px;
-            box-sizing: border-box;
-            resize: none;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-        /* Rejillas y Botones */
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-        button {
-            background: linear-gradient(135deg, #1c2541, #2a3457);
-            color: white;
-            border: 1px solid rgba(0, 242, 254, 0.2);
-            padding: 12px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        button:hover {
-            border-color: var(--accent-aqua);
-            box-shadow: 0 0 12px rgba(0, 242, 254, 0.4);
-            transform: translateY(-2px);
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent-aqua), var(--accent-blue));
-            color: #0b132b;
-            border: none;
-            font-weight: 700;
-        }
-        /* Línea de Tiempo */
-        .timeline-bar {
-            background: #1c2541;
-            height: 10px;
-            border-radius: 5px;
-            margin: 15px 0;
-            overflow: hidden;
-            border: 1px solid rgba(0, 242, 254, 0.2);
-        }
-        .timeline-progress {
-            background: linear-gradient(90deg, var(--accent-aqua), var(--accent-blue));
-            width: 50%;
-            height: 100%;
-        }
+        body { background-color: #121214; color: #ffffff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        textarea { width: 100%; height: 100px; background-color: #202024; border: 1px solid #323238; border-radius: 8px; color: #fff; padding: 15px; font-size: 16px; resize: none; margin-bottom: 20px; }
+        .btn-aqua { display: block; width: 100%; background-color: #00f2fe; color: #000; text-align: center; padding: 15px; border-radius: 8px; font-weight: bold; text-decoration: none; font-size: 16px; cursor: pointer; border: none; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,242,254,0.3); transition: all 0.2s; }
+        .btn-aqua:hover { background-color: #4facfe; color: #fff; }
+        .section { background-color: #1a1a1e; border: 1px solid #29292e; border-radius: 12px; padding: 25px; margin-bottom: 25px; }
+        h1 { color: #00f2fe; font-size: 28px; margin-bottom: 5px; }
+        h2 { font-size: 20px; color: #4facfe; margin-top: 0; }
+        .grid-botones { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+        .btn-menu { background-color: #29292e; color: #fff; border: 1px solid #3e3e4a; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: 500; }
+        .btn-menu:hover { background-color: #3e3e4a; }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h1>GENIA AI</h1>
+        <p style="color: #8d8d99; margin-top: 0; margin-bottom: 30px;">⚡ Sistema Purificado Libre de Cupones - Modo Internet Real G777</p>
 
-    <!-- 🌐 BARRA SUPERIOR -->
-    <div class="navbar">
-        <div class="nav-logo">Genia AI</div>
-        <ul class="nav-links">
-            <li class="active">Inicio</li>
-            <li>Generar</li>
-            <li>Historial</li>
-            <li>🎁 Referidos</li>
-            <li>📁 Colecciones</li>
-            <li>👤 Perfil</li>
-        </ul>
-        <div style="font-size: 14px; color: var(--accent-aqua);">⚡ 10 créditos</div>
-    </div>
-
-    <div class="app-container">
-        <!-- 📂 BARRA LATERAL NATIVA DE REDES -->
-        <div class="sidebar">
-            <ul class="sidebar-menu">
-                <li class="active">🎬 Estudio General</li>
-                <li>▶ YouTube Herramientas</li>
-                <li>🎵 TikTok / IG</li>
-                <li>📘 Facebook Creación</li>
-                <li>🧒 Cuentos Ilustrados</li>
-                <li>😊 Stickers WhatsApp</li>
-                <li>📖 Portadas de Libros</li>
-                <li>🎵 Lyric Video</li>
-                <li>⚙ Panel Admin</li>
-            </ul>
+        <!-- 🖼️ SECCIÓN 1: GENERADOR POR LOTE DE 100 -->
+        <div class="section">
+            <h2># Genera imágenes por *lote de 100.*</h2>
+            <p style="color: #8d8d99; font-size: 14px;">Describe lo que imaginas y obtén hasta 100 imágenes en segundos. Gratis viendo anuncios o genera sin límites.</p>
+            <textarea id="prompt-ia" placeholder="Describe tu imagen aquí...">un perro</textarea>
+            <button class="btn-aqua" id="btn-generar-lote" onclick="ejecutarGeneracionLote()">✨ Generar imágenes por Lote</button>
         </div>
 
-        <!-- 📺 CONTENIDO MÁSTER DEL ARCHIVO -->
-        <div class="main-content">
-            
-            <!-- 🖼️ MÓDULO 1: GENERACIÓN POR LOTE DE 100 -->
-            <div class="section-card">
-                <h1># Genera imágenes por *lote de 100.*</h1>
-                <p style="color: var(--text-muted);">Describe lo que imaginas y obtén hasta 100 imágenes en segundos. Gratis viendo anuncios, o genera sin límites.</p>
-                <textarea placeholder="✏ Escribe tu prompt base aquí... Elige entre realista, ilustración, anime, 3D o acuarela."></textarea>
-                <div class="grid-3" style="margin-bottom: 20px;">
-                    <button>Cuadrada (1:1)</button>
-                    <button>Horizontal (16:9)</button>
-                    <button>Vertical (9:16)</button>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); font-size: 14px;">
-                    <span>0 generadas · 0s tiempo</span>
-                    <span style="color: var(--accent-aqua); font-weight: bold;">$0.00 costo aprox.</span>
-                </div>
-                <button class="btn-primary" style="width: 100%; margin-top: 15px;">✨ Generar imágenes por Lote</button>
+        <!-- 🎙️ SECCIÓN 2: AUDIO Y CLONACIÓN DE VOZ -->
+        <div class="section">
+            <h2>🎙️ Audio a prompts — IA inteligente</h2>
+            <p style="color: #8d8d99; font-size: 14px;">Sube o graba tu guion y la IA lo convierte en prompts automáticamente dividido por oraciones o ideas.</p>
+            <div class="grid-botones">
+                <button class="btn-menu" onclick="ejecutarClonacionVoz()">🎙️ Generar Voz IA (F5-TTS)</button>
+                <button class="btn-menu" style="background-color: #da373c; color: #fff;" onclick="ejecutarEstudioTikTok()">🚀 CREAR TIKTOK VERTICAL (9:16)</button>
             </div>
-
-            <!-- 🎙️ MÓDULO 2: AUDIO A PROMPTS -->
-            <div class="section-card">
-                <h2>🎙️ Audio a prompts — IA inteligente</h2>
-                <p style="color: var(--text-muted);">Sube o graba tu guion y la IA lo convierte en prompts automáticamente dividido por oraciones o ideas.</p>
-                <div class="grid-2">
-                    <button>🎙️ Grabar audio (0:00)</button>
-                    <button>📁 Subir archivo (MP3, WAV)</button>
-                </div>
-                <button class="btn-primary" style="width: 100%; margin-top: 15px;">✨ Convertir audio en prompts</button>
-            </div>
-
-            <!-- 🎬 MÓDULO 3: ESTUDIO DE VIDEO & LÍNEA DE TIEMPO -->
-            <div class="section-card">
-                <h2>🎬 Estudio Genia AI</h2>
-                <p style="color: var(--text-muted);">Pega tu guion, clona voces con F5-TTS, anima con Wan2.1 y edita transiciones con MoviePy.</p>
-                <div class="grid-2" style="margin-bottom: 20px;">
-                    <button>🎙️ GENERAR VOZ (F5-TTS)</button>
-                    <button>✨ ANIMAR ESCENA (Wan2.1)</button>
-                    <button>🎵 MÚSICA DE FONDO (Jamendo)</button>
-                    <button>🌫️ EFECTO TRANSICIÓN (Fundido)</button>
-                </div>
-                <div class="timeline-bar">
-                    <div class="timeline-progress"></div>
-                </div>
-                <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted);">
-                    <span>00:00</span>
-                    <span>⏱️ Línea de Tiempo Activa (0 escenas)</span>
-                    <span>00:30</span>
-                </div>
-                <button class="btn-primary" style="width: 100%; margin-top: 20px;">🎥 EXPORTAR COMO MP4 (MoviePy)</button>
-            </div>
-
-        
-            <!-- 🎵 ESTUDIO TIKTOK VERTICAL (9:16) -->
-            <div class="section-card" style="border-color: rgba(254, 44, 85, 0.4); margin-top: 30px;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h2>🎵 Estudio TikTok</h2>
-                    <span style="background: rgba(254, 44, 85, 0.15); color: #fe2c55; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: bold;">9:16 VERTICAL</span>
-                </div>
-                <p style="color: var(--text-muted);">Crea videos cortos verticales. Configura hooks de impacto, narradores épicos o misterio con IA.</p>
-                <div class="grid-2" style="margin-bottom: 20px;">
-                    <button>🔥 NARRADOR ÉPICO</button>
-                    <button>🎙️ CLONAR VOZ (F5-TTS)</button>
-                    <button>🎵 BEAT VIRAL (Música)</button>
-                    <button>📺 EFECTO GLITCH (Transición)</button>
-                </div>
-                <div class="timeline-bar" style="border-color: rgba(254, 44, 85, 0.4);">
-                    <div class="timeline-progress" style="background: linear-gradient(90deg, #fe2c55, #25f4ee); box-shadow: 0 0 10px #fe2c55; width: 75%;"></div>
-                </div>
-                <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted);">
-                    <span>00:00</span>
-                    <span>⏱️ Timeline TikTok · 15s / 60s</span>
-                    <span>00:15</span>
-                </div>
-                <button class="btn-primary" style="width: 100%; margin-top: 20px; background: linear-gradient(135deg, #fe2c55, #25f4ee); color: #000;">🚀 CREAR TIKTOK VERTICAL</button>
-            </div>
-    </div>
+        </div>
     </div>
 
-<script src="script.js" defer></script>
+    <!-- ⚡ INYECCIÓN DE CABLES DE RESPUESTA DIRECTA -->
+    <script>
+        async function ejecutarGeneracionLote() {
+            const boton = document.getElementById("btn-generar-lote");
+            const promptText = document.getElementById("prompt-ia").value;
+            boton.innerText = "⏳ Generando lote de 100...";
+            boton.style.backgroundColor = "#4facfe";
+            try {
+                await fetch('/generar-lote-ia?prompt=' + encodeURIComponent(promptText), { method: 'POST' });
+                alert("¡Lote de 100 imágenes enviado con éxito al servidor!");
+            } catch (err) {
+                console.error(err);
+            } finally {
+                boton.innerText = "✨ Generar imágenes por Lote";
+                boton.style.backgroundColor = "#00f2fe";
+            }
+        }
+
+        async function ejecutarClonacionVoz() {
+            alert("🎙️ Conectando con el motor Clonador F5-TTS en la nube...");
+            await fetch('/generar-audio-ia?usar_clon=true', { method: 'POST' });
+        }
+
+        async function ejecutarEstudioTikTok() {
+            alert("🚀 Procesando Estudio TikTok Vertical (9:16) en segundo plano...");
+            await fetch('/exportar-video-largo?formato=916', { method: 'POST' });
+        }
+    </script>
 </body>
 </html>
