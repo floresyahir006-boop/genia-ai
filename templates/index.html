@@ -5,74 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GENIA AI - Estudio Multimedia Pro</title>
     <link rel="stylesheet" href="/static/style.css" id="theme-stylesheet">
+    <!-- Cargamos el script oficial de PayPal -->
+    <script src="https://paypal.com"></script>
     <style>
-        body { background-color: #121214; color: #ffffff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; }
+        body { background-color: #121214; color: #ffffff; font-family: sans-serif; margin: 0; padding: 20px; }
         .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
         textarea { width: 100%; height: 100px; background-color: #202024; border: 1px solid #323238; border-radius: 8px; color: #fff; padding: 15px; font-size: 16px; resize: none; margin-bottom: 20px; }
-        .btn-aqua { display: block; width: 100%; background-color: #00f2fe; color: #000; text-align: center; padding: 15px; border-radius: 8px; font-weight: bold; text-decoration: none; font-size: 16px; cursor: pointer; border: none; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,242,254,0.3); transition: all 0.2s; }
-        .btn-aqua:hover { background-color: #4facfe; color: #fff; }
+        .btn-aqua { display: block; width: 100%; background-color: #00f2fe; color: #000; text-align: center; padding: 15px; border-radius: 8px; font-weight: bold; text-decoration: none; font-size: 16px; cursor: pointer; border: none; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,242,254,0.3); }
         .section { background-color: #1a1a1e; border: 1px solid #29292e; border-radius: 12px; padding: 25px; margin-bottom: 25px; }
         h1 { color: #00f2fe; font-size: 28px; margin-bottom: 5px; }
         h2 { font-size: 20px; color: #4facfe; margin-top: 0; }
-        .grid-botones { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
-        .btn-menu { background-color: #29292e; color: #fff; border: 1px solid #3e3e4a; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: 500; }
-        .btn-menu:hover { background-color: #3e3e4a; }
+        .grid-precios { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        .tarjeta-precio { background-color: #202024; border: 2px solid #323238; border-radius: 8px; padding: 20px; text-align: center; }
+        .tarjeta-precio.destacado { border-color: #00f2fe; box-shadow: 0 0 15px rgba(0,242,254,0.2); }
+        .precio { font-size: 32px; font-weight: bold; color: #00f2fe; margin: 15px 0; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>GENIA AI</h1>
-        <p style="color: #8d8d99; margin-top: 0; margin-bottom: 30px;">⚡ Sistema Purificado Libre de Cupones - Modo Internet Real G777</p>
+        <p style="color: #8d8d99; margin-top: 0; margin-bottom: 30px;">⚡ Sistema de Cobro Activado - Modo Internet Real G777</p>
 
-        <!-- 🖼️ SECCIÓN 1: GENERADOR POR LOTE DE 100 -->
+        <!-- 🖼️ SECCIÓN 1: GENERADOR POR LOTE -->
         <div class="section">
             <h2># Genera imágenes por *lote de 100.*</h2>
-            <p style="color: #8d8d99; font-size: 14px;">Describe lo que imaginas y obtén hasta 100 imágenes en segundos. Gratis viendo anuncios o genera sin límites.</p>
             <textarea id="prompt-ia" placeholder="Describe tu imagen aquí...">un perro</textarea>
-<div id="contenedor-resultado" style="text-align:center; margin-top:20px;"></div>
             <button class="btn-aqua" id="btn-generar-lote" onclick="ejecutarGeneracionLote()">✨ Generar imágenes por Lote</button>
+            <div id="contenedor-resultado" style="text-align:center; margin-top:20px;"></div>
         </div>
 
-        <!-- 🎙️ SECCIÓN 2: AUDIO Y CLONACIÓN DE VOZ -->
+        <!-- 💰 SECCIÓN 2: PLANES DE SUSCRIPCIÓN -->
         <div class="section">
-            <h2>🎙️ Audio a prompts — IA inteligente</h2>
-            <p style="color: #8d8d99; font-size: 14px;">Sube o graba tu guion y la IA lo convierte en prompts automáticamente dividido por oraciones o ideas.</p>
-            <div class="grid-botones">
-                <button class="btn-menu" onclick="ejecutarClonacionVoz()">🎙️ Generar Voz IA (F5-TTS)</button>
-                <button class="btn-menu" style="background-color: #da373c; color: #fff;" onclick="ejecutarEstudioTikTok()">🚀 CREAR TIKTOK VERTICAL (9:16)</button>
+            <h2>💎 Elige tu Plan de Acceso Premium</h2>
+            <p style="color: #8d8d99; font-size: 14px;">Desbloquea el generador por lote de 100, la clonación de voz F5-TTS y el Estudio TikTok 9:16 sin límites.</p>
+            
+            <div class="grid-precios">
+                <!-- Plan 15 Días -->
+                <div class="tarjeta-precio">
+                    <h3>Plan Quincenal</h3>
+                    <p style="color: #8d8d99; font-size: 12px;">Acceso por 15 días corridos</p>
+                    <div class="precio">$20 <span style="font-size:14px; color:#fff;">USD</span></div>
+                    <div id="paypal-button-container-15"></div>
+                </div>
+
+                <!-- Plan Mensual -->
+                <div class="tarjeta-precio destacado">
+                    <h3>Plan Mensual Máster</h3>
+                    <p style="color: #8d8d99; font-size: 12px;">Acceso completo por 30 días</p>
+                    <div class="precio">$29 <span style="font-size:14px; color:#fff;">USD</span></div>
+                    <div id="paypal-button-container-30"></div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- ⚡ INYECCIÓN DE CABLES DE RESPUESTA DIRECTA -->
     <script>
+        // Funciones de botones de PayPal
+        if (typeof paypal !== 'undefined') {
+            // Botón de $20 (15 días)
+            paypal.Buttons({
+                createOrder: (data, actions) => { return actions.order.create({ purchase_units: [{ amount: { value: '20.00' } }] }); },
+                onApprove: (data, actions) => { return actions.order.capture().then(details => { alert('¡Gracias por tu pago, compadre! Plan Quincenal activado para ' + details.payer.name.given_name); }); }
+            }).render('#paypal-button-container-15');
+
+            // Botón de $29 (Mensual)
+            paypal.Buttons({
+                createOrder: (data, actions) => { return actions.order.create({ purchase_units: [{ amount: { value: '29.00' } }] }); },
+                onApprove: (data, actions) => { return actions.order.capture().then(details => { alert('¡Suscripción Mensual Activada, compadre! Bienvenido a Genia AI, ' + details.payer.name.given_name); }); }
+            }).render('#paypal-button-container-30');
+        }
+
         async function ejecutarGeneracionLote() {
             const boton = document.getElementById("btn-generar-lote");
             const promptText = document.getElementById("prompt-ia").value;
             boton.innerText = "⏳ Generando lote de 100...";
-            boton.style.backgroundColor = "#4facfe";
             try {
                 const response = await fetch('/generar-lote-ia?prompt=' + encodeURIComponent(promptText), { method: 'POST' });
                 const resData = await response.json();
                 if(resData.url) {
-                    document.getElementById("contenedor-resultado").innerHTML = <h3 style="color:#00f2fe;">🎨 Tu Imagen IA está Lista:</h3><img src="${resData.url}?t=${new Date().getTime()}" style="max-width:100%; border-radius:12px; border:2px solid #00f2fe; box-shadow:0 0 20px rgba(0,242,254,0.5);"/>;
-                } else { alert("Error al procesar"); }
-            } catch (err) {
-                console.error(err);
-            } finally {
-                boton.innerText = "✨ Generar imágenes por Lote";
-                boton.style.backgroundColor = "#00f2fe";
-            }
-        }
-
-        async function ejecutarClonacionVoz() {
-            alert("🎙️ Conectando con el motor Clonador F5-TTS en la nube...");
-            const response = await fetch('/generar-audio-ia?usar_clon=true', { method: 'POST' });
-        }
-
-        async function ejecutarEstudioTikTok() {
-            alert("🚀 Procesando Estudio TikTok Vertical (9:16) en segundo plano...");
-            const response = await fetch('/exportar-video-largo?formato=916', { method: 'POST' });
+                    document.getElementById("contenedor-resultado").innerHTML = <h3 style="color:#00f2fe;">🎨 Tu Imagen IA está Lista:</h3><img src="${resData.url}?t=${new Date().getTime()}" style="max-width:100%; border-radius:12px; border:2px solid #00f2fe;"/>;
+                }
+            } catch (err) { console.error(err); }
+            finally { boton.innerText = "✨ Generar imágenes por Lote"; }
         }
     </script>
 </body>
