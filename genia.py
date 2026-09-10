@@ -98,12 +98,32 @@ async def stripe_webhook(user_id: str):
 
 # 🖼️ MOTOR DE GENERACIÓN POR LOTE DE 100 G777
 @app.post("/generar-lote-ia")
-async def generar_lote_ia(prompt: str):
     print(f"🎨 ¡Motor encendido! Fabricando lote para: {prompt}")
     import os
     os.makedirs("outputs", exist_ok=True)
     # Aquí el backend procesa el lote simulado o la API purificada rápida
     for i in range(1, 6): # Generamos los primeros archivos de prueba rápido
-        with open(f"outputs/imagen_{i}.txt", "w") as f:
             f.write(f"Imagen de {prompt} numero {i}")
-    return {"status": "success", "message": "Lote generado en outputs"}
+
+
+@app.post("/generar-lote-ia")
+async def generar_lote_ia(prompt: str):
+    print(f"🎨 ¡Motor Real G777 Encendido! Fabricando imágenes para: {prompt}")
+    import os, random
+    from fastapi.responses import JSONResponse
+    os.makedirs("static", exist_ok=True)
+    
+    try:
+        # Generamos una imagen real con IA usando un motor público gratuito
+        semilla = random.randint(1, 99999)
+        url_ia = f"https://pollinations.ai{urllib.parse.quote(prompt)}?width=512&height=512&seed={semilla}&nologo=true"
+        
+        # Guardamos la foto real en tu carpeta estática
+        ruta_guardado = os.path.join("static", "resultado_perro.jpg")
+        urllib.request.urlretrieve(url_ia, ruta_guardado)
+        
+        print("🚀 ¡Imagen fabricada con éxito en las carpetas locales!")
+        return {"status": "success", "url": "/static/resultado_perro.jpg"}
+    except Exception as e:
+        print(f"❌ Error en el motor de IA: {e}")
+        return {"status": "error", "message": str(e)}
