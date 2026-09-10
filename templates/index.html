@@ -29,6 +29,7 @@
             <h2># Genera imágenes por *lote de 100.*</h2>
             <p style="color: #8d8d99; font-size: 14px;">Describe lo que imaginas y obtén hasta 100 imágenes en segundos. Gratis viendo anuncios o genera sin límites.</p>
             <textarea id="prompt-ia" placeholder="Describe tu imagen aquí...">un perro</textarea>
+<div id="contenedor-resultado" style="text-align:center; margin-top:20px;"></div>
             <button class="btn-aqua" id="btn-generar-lote" onclick="ejecutarGeneracionLote()">✨ Generar imágenes por Lote</button>
         </div>
 
@@ -51,8 +52,11 @@
             boton.innerText = "⏳ Generando lote de 100...";
             boton.style.backgroundColor = "#4facfe";
             try {
-                await fetch('/generar-lote-ia?prompt=' + encodeURIComponent(promptText), { method: 'POST' });
-                alert("¡Lote de 100 imágenes enviado con éxito al servidor!");
+                const response = await fetch('/generar-lote-ia?prompt=' + encodeURIComponent(promptText), { method: 'POST' });
+                const resData = await response.json();
+                if(resData.url) {
+                    document.getElementById("contenedor-resultado").innerHTML = <h3 style="color:#00f2fe;">🎨 Tu Imagen IA está Lista:</h3><img src="${resData.url}?t=${new Date().getTime()}" style="max-width:100%; border-radius:12px; border:2px solid #00f2fe; box-shadow:0 0 20px rgba(0,242,254,0.5);"/>;
+                } else { alert("Error al procesar"); }
             } catch (err) {
                 console.error(err);
             } finally {
@@ -63,12 +67,12 @@
 
         async function ejecutarClonacionVoz() {
             alert("🎙️ Conectando con el motor Clonador F5-TTS en la nube...");
-            await fetch('/generar-audio-ia?usar_clon=true', { method: 'POST' });
+            const response = await fetch('/generar-audio-ia?usar_clon=true', { method: 'POST' });
         }
 
         async function ejecutarEstudioTikTok() {
             alert("🚀 Procesando Estudio TikTok Vertical (9:16) en segundo plano...");
-            await fetch('/exportar-video-largo?formato=916', { method: 'POST' });
+            const response = await fetch('/exportar-video-largo?formato=916', { method: 'POST' });
         }
     </script>
 </body>
