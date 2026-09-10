@@ -2,7 +2,7 @@ import os
 import random
 import urllib.request
 import urllib.parse
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -40,10 +40,10 @@ async def generar_lote_ia(prompt: str):
     try:
         semilla = random.randint(1, 99999)
         url_ia = f"https://pollinations.ai{urllib.parse.quote(prompt)}?width=512&height=512&seed={semilla}&nologo=true"
-        
+
         ruta_guardado = os.path.join("static", "resultado_perro.jpg")
         urllib.request.urlretrieve(url_ia, ruta_guardado)
-        
+
         print("🚀 ¡Imagen fabricada con éxito en las carpetas locales!")
         return {"status": "success", "url": "/static/resultado_perro.jpg"}
     except Exception as e:
@@ -66,13 +66,14 @@ async def exportar_video_largo(formato: str = "916"):
 templates = Jinja2Templates(directory="templates")
 
 @app.get("/")
-async def leer_raiz(request: Request = None):
-    from fastapi import Request
-    # Si da error por el parámetro request, lo manejamos limpio
+async def leer_raiz(request: Request):
     try:
         return templates.TemplateResponse("index.html", {"request": request})
-    except:
-        with open("templates/index.html", "r") as f:
-            html_content = f.read()
-        from fastapi.responses import HTMLResponse
-        return HTMLResponse(content=html_content, status_code=200)
+    except Exception as e:
+        print(f"Error cargando template: {e}")
+        if os.path.exists("templates/index.html"):
+            with open("templates/index.html", "r") as f:
+                html_content = f.read()
+            from fastapi.responses import HTMLResponse
+            return HTMLResponse(content=html_content, status_code=200)
+        return {"status": "error", "message": "Falta index.html"}
