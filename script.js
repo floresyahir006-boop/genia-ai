@@ -1,44 +1,49 @@
-// 🎬 CONECTOR MAESTRO DE BOTONES - GENIA AI INTERNET REAL
+// ⚡ CONECTOR MAESTRO SIMPLIFICADO G777 - SIN BUSCAR TEXTOS
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("¡Cables de internet conectados al 100%!");
+    console.log("¡Cables lógicos forzados y activos!");
 
-    // 1. Botón: Generar Imágenes por Lote de 100
-    const btnGenerar = document.querySelector("button:contains('Generar imágenes por Lote')") || document.querySelectorAll("button")[3];
-    if (btnGenerar) {
-        btnGenerar.addEventListener("click", async () => {
-            const promptInput = document.querySelector("textarea");
-            const promptText = promptInput ? promptInput.value : "un perro";
-            btnGenerar.innerText = "⏳ Generando lote de 100...";
-            
-            try {
-                const response = await fetch(/generar-lote-ia?prompt=${encodeURIComponent(promptText)}, { method: "POST" });
-                const data = await response.json();
-                alert("¡Lote generado con éxito en la nube!");
-            } catch (err) {
-                console.error("Error en generación:", err);
-            } finally {
-                btnGenerar.innerText = "✨ Generar imágenes por Lote";
-            }
-        });
-    }
+    // 1. Selector de la caja de texto (textarea)
+    const cajaTexto = document.querySelector("textarea");
 
-    // 2. Botón: Clonar Voz IA (F5-TTS)
-    const btnVoz = document.querySelector("button:contains('CLONAR VOZ')") || document.getElementById("btn-generar-voz");
-    if (btnVoz) {
-        btnVoz.addEventListener("click", async () => {
-            btnVoz.innerText = "🎙️ Clonando voz...";
-            await fetch('/generar-audio-ia?usar_clon=true', { method: "POST" });
-            btnVoz.innerText = "🤖 Generar Voz IA (F5-TTS)";
-        });
-    }
+    // 2. Buscamos TODOS los botones de la suite
+    const botones = document.querySelectorAll("button");
 
-    // 3. Botón: Crear TikTok Vertical (9:16)
-    const btnTikTok = document.querySelector("button:contains('CREAR TIKTOK')") || document.querySelectorAll("button")[12];
-    if (btnTikTok) {
-        btnTikTok.addEventListener("click", async () => {
-            btnTikTok.innerText = "🚀 Procesando Video Corto 9:16...";
-            await fetch('/exportar-video-largo?formato=916', { method: "POST" });
-            btnTikTok.innerText = "🚀 CREAR TIKTOK VERTICAL";
-        });
-    }
+    botones.forEach((boton) => {
+        // Capturamos lo que dice cada botón para saber cuál es cuál
+        const textoBoton = boton.innerText.toLowerCase();
+
+        // A) Si es el botón aqua de generar imágenes
+        if (textoBoton.includes("generar imágenes") || textoBoton.includes("lote")) {
+            boton.addEventListener("click", async () => {
+                const promptReal = cajaTexto ? cajaTexto.value : "un perro";
+                boton.innerText = "⏳ Generando lote de 100...";
+                try {
+                    await fetch(/generar-lote-ia?prompt=${encodeURIComponent(promptReal)}, { method: "POST" });
+                    alert("¡Lote de 100 imágenes enviado al motor!");
+                } catch (err) {
+                    console.error(err);
+                } finally {
+                    boton.innerText = "✨ Generar imágenes por Lote";
+                }
+            });
+        }
+
+        // B) Si es tu botón de clonar voz (F5-TTS)
+        if (textoBoton.includes("clonar") || textoBoton.includes("f5-tts")) {
+            boton.addEventListener("click", async () => {
+                boton.innerText = "🎙️ Conectando Clonador...";
+                await fetch('/generar-audio-ia?usar_clon=true', { method: "POST" });
+                boton.innerText = "🤖 Generar Voz IA (F5-TTS)";
+            });
+        }
+
+        // C) Si es el botón de tu Estudio TikTok 9:16 vertical
+        if (textoBoton.includes("tiktok") || textoBoton.includes("vertical")) {
+            boton.addEventListener("click", async () => {
+                boton.innerText = "🚀 Procesando 9:16...";
+                await fetch('/exportar-video-largo?formato=916', { method: "POST" });
+                boton.innerText = "🚀 CREAR TIKTOK VERTICAL";
+            });
+        }
+    });
 });
