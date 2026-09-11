@@ -62,8 +62,8 @@
 
     <div class="container">
         <h2># Imágenes por lote de 100</h2>
-        <form action="/generar-lote-ia" method="GET">
-            <textarea name="prompt" placeholder="Escribe tus instrucciones aquí..." required></textarea>
+        <form action="/generar-lote-ia" method="POST" onsubmit="this.action='/generar-lote-ia?prompt=' + encodeURIComponent(document.getElementById('input-prompt').value)">
+            <textarea id="input-prompt" placeholder="Escribe tus instrucciones aquí..." required></textarea>
             <button type="submit" class="btn-submit">+ Generar imágenes</button>
         </form>
     </div>
