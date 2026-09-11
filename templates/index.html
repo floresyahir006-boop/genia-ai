@@ -61,13 +61,21 @@
 <body>
 
     <div class="container">
-        <h2># Generar imágenes por lote de 100</h2>
-        <!-- Modificamos el formulario para pasar el parámetro por la URL dinámicamente -->
-        <form method="POST" onsubmit="this.action='/generar-lote-ia?prompts=' + encodeURIComponent(document.getElementById('prompts').value);">
-            <textarea id="prompts" name="prompts" placeholder="Escribe tus instrucciones aquí..."></textarea>
-            <button type="submit" class="btn-submit">+ Generar imágenes por Lote</button>
+        <h2># Imágenes por lote de 100</h2>
+        <form action="/generar-lote-ia" method="POST" id="form-lote">
+            <textarea id="input-prompts" placeholder="Escribe tus instrucciones aquí..." required></textarea>
+            <button type="submit" class="btn-submit">+ Generar imágenes</button>
         </form>
     </div>
+
+    <script>
+        document.getElementById('form-lote').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const promptsValue = encodeURIComponent(document.getElementById('input-prompts').value);
+            this.action = /generar-lote-ia?prompts=${promptsValue};
+            this.submit();
+        });
+    </script>
 
 </body>
 </html>
