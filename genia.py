@@ -40,7 +40,7 @@ async def generar_lote_ia(prompt: str):
     print(f"🎨 ¡Motor Real G777 Encendido! Fabricando imágenes para: {quote(prompt)}")
     try:
         semilla = random.randint(1, 99999)
-        url_ia = f"https://pollinations.ai{urllib.parse.quote(prompt)}?width=512&height=512&seed={semilla}&nologo=true"
+        url_ia = f"https://pollinations.ai{quote(prompt)}"
 
         ruta_guardado = os.path.join("static", "resultado_perro.jpg")
         urllib.request.urlretrieve(url_ia, ruta_guardado)
