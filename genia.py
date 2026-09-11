@@ -1,3 +1,4 @@
+from urllib.parse import quote
 import os
 import random
 import urllib.request
@@ -36,7 +37,7 @@ async def stripe_webhook(user_id: str):
 # 🖼️ MOTOR REAL DE IA INDESTRUCTIBLE G777
 @app.post("/generar-lote-ia")
 async def generar_lote_ia(prompt: str):
-    print(f"🎨 ¡Motor Real G777 Encendido! Fabricando imágenes para: {prompt}")
+    print(f"🎨 ¡Motor Real G777 Encendido! Fabricando imágenes para: {quote(prompt)}")
     try:
         semilla = random.randint(1, 99999)
         url_ia = f"https://pollinations.ai{urllib.parse.quote(prompt)}?width=512&height=512&seed={semilla}&nologo=true"
